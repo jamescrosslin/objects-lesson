@@ -3,7 +3,6 @@ var path = require('path');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -13,14 +12,41 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-const prototypeRouter = require('./routes/prototype');
-app.use('/submission', prototypeRouter);
+// prototyping
+app.use((req, res, next) => {
+  const formData = req.body;
 
-const classRouter = require('./routes/class');
-app.use('/submission', classRouter);
-const compositionRouter = require('./routes/composition');
-app.use('/submission', compositionRouter);
+  function dataPrototype(obj) {
+    this.id = 1;
+    for (let key of Object.keys(obj)) {
+      this[key] = obj[key];
+    }
+  }
+
+  req.formData = new dataPrototype(formData);
+  next();
+});
+
+// classing
+// app.use((req, res, next) => {
+//   const formData = req.body;
+
+//   req.formData = formData;
+//   next();
+// });
+
+// composing
+// app.use((req, res, next) => {
+//   const formData = req.body;
+
+//   req.formData = formData;
+//   next();
+// });
+
+app.post('/submission', (req, res) => {
+  console.log(req.formData);
+  res.end();
+});
 
 module.exports = app;
