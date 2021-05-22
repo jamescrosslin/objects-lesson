@@ -15,20 +15,20 @@ app.use('/', indexRouter);
 
 // prototyping
 app.use((req, res, next) => {
-  const formData = req.body;
-
-  function dataPrototype(obj) {
-    this.id = 1;
-    for (let key of Object.keys(obj)) {
-      this[key] = obj[key];
-    }
-  }
-  req.formData = new dataPrototype(formData);
+  // function dataPrototype(obj) {
+  //   this.id = 1;
+  //   for (let key of Object.keys(obj)) {
+  //     this[key] = obj[key];
+  //   }
+  // }
+  // req.formData = new dataPrototype(formData);
 
   // could alternately do
-  // const dataPrototype = {id: 1}
-  // const formData = req.body
-  // Object.setPrototypeOf(formData, dataPrototype)
+  const dataPrototype = { id: 1 };
+  const formData = req.body;
+  Object.setPrototypeOf(formData, dataPrototype);
+
+  req.formData = formData;
 
   next();
 });
@@ -50,8 +50,8 @@ app.use((req, res, next) => {
 // });
 
 app.post('/submission', (req, res) => {
-  console.log(req.formData, req.formData.prototype);
-  res.end();
+  console.log(req.formData, Object.getPrototypeOf(req.formData));
+  res.send('This is a page');
 });
 
 module.exports = app;
