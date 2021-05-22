@@ -10,4 +10,4 @@ All required input elements (as well as registration activity checkbox elements 
 This form was built using HTML, CSS, and JavaScript.
 
 License
-MIT - Do not use these files without attribution to James Crosslin
+MIT - attribute James Crosslin
