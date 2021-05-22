@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   // req.formData = new dataPrototype(formData);
 
   // could alternately do
-  const dataPrototype = { id: 1 };
+  const dataPrototype = { id: 1, extendsFrom: 'dataPrototype' };
   const formData = req.body;
   Object.setPrototypeOf(formData, dataPrototype);
 
@@ -50,7 +50,8 @@ app.use((req, res, next) => {
 // });
 
 app.post('/submission', (req, res) => {
-  console.log(req.formData, Object.getPrototypeOf(req.formData));
+  console.log(req.formData);
+  console.log(req.formData.id, req.formData.extendsFrom);
   res.send('This is a page');
 });
 
