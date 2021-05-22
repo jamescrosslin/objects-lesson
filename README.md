@@ -11,3 +11,7 @@ and then to start the server, enter
 ```
   DEBUG=objects-lesson:* npm run dev
 ```
+
+# License
+
+MIT - attribute James Crosslin
