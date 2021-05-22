@@ -23,8 +23,13 @@ app.use((req, res, next) => {
       this[key] = obj[key];
     }
   }
-
   req.formData = new dataPrototype(formData);
+
+  // could alternately do
+  // const dataPrototype = {id: 1}
+  // const formData = req.body
+  // Object.setPrototypeOf(formData, dataPrototype)
+
   next();
 });
 
@@ -45,7 +50,7 @@ app.use((req, res, next) => {
 // });
 
 app.post('/submission', (req, res) => {
-  console.log(req.formData);
+  console.log(req.formData, req.formData.prototype);
   res.end();
 });
 
